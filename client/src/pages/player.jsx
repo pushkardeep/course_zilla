@@ -28,10 +28,10 @@ const player = () => {
   const id = searchParams.get("id");
 
   useEffect(() => {
-    // dispatch(setCourse(null));
-    // dispatch(setOwner(null));
-    // video(id, dispatch, navigate, token);
-    // getCourses(navigate, dispatch, token);
+    dispatch(setCourse(null));
+    dispatch(setOwner(null));
+    video(id, dispatch, navigate, token);
+    getCourses(navigate, dispatch, token);
   }, [id]);
 
   return (

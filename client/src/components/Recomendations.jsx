@@ -14,10 +14,10 @@ function Recomendations() {
   const { courses } = useSelector((state) => state.courses);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   await getCourses(navigate, dispatch, token);
-    // };
-    // fetchData();
+    const fetchData = async () => {
+      await getCourses(navigate, dispatch, token);
+    };
+    fetchData();
   }, []);
   return (
     <div className="w-full md:w-[35%] md:max-w-[320px] rounded-xl bg-[#252525] mt-0.5 mb-2 transition-all overflow-hidden">
