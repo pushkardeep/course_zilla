@@ -63,9 +63,9 @@ function App() {
         <Route
           path="/player"
           element={
+            <Protected>
               <Player />
-            // <Protected>
-            // </Protected>
+            </Protected>
           }
         />
       </Routes>
