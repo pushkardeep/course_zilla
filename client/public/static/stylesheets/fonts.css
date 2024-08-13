@@ -1,0 +1,20 @@
+@font-face {
+  font-family: zen;
+  src: url(../fonts/ZenDots-Regular.ttf);
+}
+@font-face {
+  font-family: gil reg;
+  src: url(../fonts/Gilroy-Regular.ttf);
+}
+@font-face {
+  font-family: gil med;
+  src: url(../fonts/Gilroy-Medium.ttf);
+}
+@font-face {
+  font-family: gil sem;
+  src: url(../fonts/Gilroy-SemiBold.ttf);
+}
+@font-face {
+  font-family: gil bol;
+  src: url(../fonts/Gilroy-Bold.ttf);
+}

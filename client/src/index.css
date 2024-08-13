@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "gil_med";
+  src: url("../public//static/fonts/Gilroy-Medium.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background: #0d0d0d;
+  user-select: none;
+  min-width: 300px;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 1px rgb(231, 231, 231);
+  color: transparent;
+}
+
+.Toastify__toast-container {
+  width: 100%;
+  top: 0%;
+  padding: 0px 7px;
+  z-index: 9999;
+}
+
+.Toastify__toast {
+  background-color: white;
+  color: black;
+  font-size: 0.95rem;
+  width: 100%;
+  margin: 0;
+  margin-top: 7px;
+}
+
+@media (max-width: 480px) {
+  .Toastify__toast {
+    border-radius: 7px;
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #424242;
+  border-radius: 100px;
+}
