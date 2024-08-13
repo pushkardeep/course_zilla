@@ -1,5 +1,5 @@
 // main service worker
-import { uploadToCloud } from "./src/utils/uploadToCloud";
+import { uploadToCloud } from "../src/utils/uploadToCloud";
 
 // Install service worker and activate immediately
 self.addEventListener("install", (event) => {
@@ -43,7 +43,7 @@ const handleVideoUpload = async (e) => {
       const end = Math.min((i + 1) * chunkSize, file.size);
       const formData = new FormData();
       formData.append("file", file.slice(start, end));
-      formData.append("upload_preset", import.meta.env.VITE_VIDEO_PRESET);
+      formData.append("upload_preset", "courses_videos_preset");
       const contentRange = `bytes ${start}-${end - 1}/${file.size}`;
 
       while (retries <= maxRetries) {
@@ -103,7 +103,7 @@ const handleImageUpload = async (e) => {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", import.meta.env.VITE_IMAGES_PRESET);
+    formData.append("upload_preset", "courses_cover_image_preset");
 
     while (retries <= maxRetries) {
       const response = await uploadToCloud(formData, uniqueName);
