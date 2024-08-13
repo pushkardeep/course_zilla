@@ -22,8 +22,8 @@
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker
-            .register("public/sw.js", {
-              scope: "public/",
+            .register("/sw.js", {
+              scope: "/",
               type: "module",
             })
             .catch((error) => console.log(error));
