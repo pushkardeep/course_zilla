@@ -22,7 +22,9 @@
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker
-            .register("/sw.js")
+            .register("/sw.js",{
+              type: "module",
+            })
             .catch((error) => console.log(error));
         });
 

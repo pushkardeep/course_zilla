@@ -40,7 +40,7 @@ const handleUploadRequest = async (formData, headers) => {
 };
 
 // Upload to Cloudinary with appropriate headers and error handling
-const uploadToCloud = async (
+export const uploadToCloud = async (
   formData,
   uniqueName,
   contentRange = undefined
@@ -49,5 +49,3 @@ const uploadToCloud = async (
   const headers = prepareHeaders(uniqueName, contentRange);
   return await handleUploadRequest(formData, headers);
 };
-
-self.uploadToCloud = uploadToCloud;
