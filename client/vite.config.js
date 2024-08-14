@@ -25,7 +25,7 @@ export default defineConfig({
       // Optional: Disable Workbox if you are using your own implementation
       workbox: {
         importScripts: ['sw.js'],
-        // swDest: `sw-${Date.now()}.js`,
+        swDest: `sw-${Date.now()}.js`,
         skipWaiting: true,
         clientsClaim: true
       },
