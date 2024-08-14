@@ -1,5 +1,5 @@
-// main service worker
-import { uploadToCloud } from "../src/utils/uploadToCloud";
+// Import the uploadToCloud function using importScripts
+importScripts("/src/utils/uploadToCloud.js");
 
 // Install service worker and activate immediately
 self.addEventListener("install", (event) => {
@@ -14,16 +14,16 @@ self.addEventListener("activate", (event) => {
 self.onmessage = async (e) => {
   switch (e.data.type) {
     case "VIDEO_UPLOAD":
-      handleVideoUpload(e);
+      await handleVideoUpload(e);
       break;
     case "IMAGE_UPLOAD":
-      handleImageUpload(e);
+      await handleImageUpload(e);
       break;
     case "CREATE_POST":
       createPost(e);
       break;
     default:
-      console.log("unknown eroor typew");
+      console.log("Unknown error type");
       break;
   }
 };
@@ -107,7 +107,6 @@ const handleImageUpload = async (e) => {
 
     while (retries <= maxRetries) {
       const response = await uploadToCloud(formData, uniqueName);
-      // console.log(response);
       if (response.secure_url) {
         self.clients.matchAll().then((clients) => {
           clients.forEach((client) => {
@@ -156,7 +155,7 @@ const createPost = (e) => {
   }
 };
 
-// error handl3er
+// Error handler
 const sendErrorMessageToClients = (type, message) => {
   self.clients.matchAll().then((clients) => {
     clients.forEach((client) => {

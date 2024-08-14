@@ -15,9 +15,7 @@ const prepareHeaders = (uniqueName, contentRange) => {
 const handleUploadRequest = async (formData, headers) => {
   try {
     const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${
-        import.meta.env.VITE_CLOUD_NAME
-      }/auto/upload`,
+      `https://api.cloudinary.com/v1_1/da2o22xsg/auto/upload`,
       {
         method: "POST",
         body: formData,
@@ -42,7 +40,7 @@ const handleUploadRequest = async (formData, headers) => {
 };
 
 // Upload to Cloudinary with appropriate headers and error handling
-export const uploadToCloud = async (
+const uploadToCloud = async (
   formData,
   uniqueName,
   contentRange = undefined
@@ -50,3 +48,5 @@ export const uploadToCloud = async (
   const headers = prepareHeaders(uniqueName, contentRange);
   return await handleUploadRequest(formData, headers);
 };
+
+self.uploadToCloud = uploadToCloud;
