@@ -9,6 +9,10 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(self.clients.claim());
 });
 
+self.addEventListener('message', (event) => {
+  console.log('Service worker received message:', event.data);
+});
+
 // Listen for messages from clients and handle uploads accordingly
 self.onmessage = async (e) => {
   console.log("sw main message aa gya hai video ka ")
