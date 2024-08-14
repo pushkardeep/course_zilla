@@ -45,7 +45,7 @@ const uploadToCloud = async (
   uniqueName,
   contentRange = undefined
 ) => {
-  console.log("upload to cloud is coming ")
+  console.log("upload to cloud is run ");
   const headers = prepareHeaders(uniqueName, contentRange);
   return await handleUploadRequest(formData, headers);
 };

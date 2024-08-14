@@ -1,6 +1,7 @@
 // sends data to main root directory sw file
 export const sendMessage = (data, type) => {
   try {
+    console.log("sw ne message bej diya hai ")
     if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage({
         type: type,

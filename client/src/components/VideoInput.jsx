@@ -24,6 +24,8 @@ const VideoInput = forwardRef((prop, ref) => {
       return alert(isSend.message);
     }
 
+    console.log("video send ho gyi hai")
+
     if (prop.type === "first") {
       prop.func();
     }
