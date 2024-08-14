@@ -1,4 +1,3 @@
-// Import the uploadToCloud function using importScripts
 importScripts("/src/utils/uploadToCloud.js");
 
 // Install service worker and activate immediately
@@ -12,7 +11,6 @@ self.addEventListener("activate", (event) => {
 
 // Listen for messages from clients and handle uploads accordingly
 self.onmessage = async (e) => {
-  console.log("message");
   switch (e.data.type) {
     case "VIDEO_UPLOAD":
       await handleVideoUpload(e);
@@ -47,10 +45,8 @@ const handleVideoUpload = async (e) => {
       formData.append("upload_preset", "courses_videos_preset");
       const contentRange = `bytes ${start}-${end - 1}/${file.size}`;
 
-      console.log("now first time of uploa to cloud")
-
       while (retries <= maxRetries) {
-        const response = await uploadToCloud(
+        const response = await self.uploadToCloud(
           formData,
           uniqueName,
           contentRange
@@ -109,7 +105,7 @@ const handleImageUpload = async (e) => {
     formData.append("upload_preset", "courses_cover_image_preset");
 
     while (retries <= maxRetries) {
-      const response = await uploadToCloud(formData, uniqueName);
+      const response = await self.uploadToCloud(formData, uniqueName);
       if (response.secure_url) {
         self.clients.matchAll().then((clients) => {
           clients.forEach((client) => {
