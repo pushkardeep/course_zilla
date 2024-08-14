@@ -46,6 +46,8 @@ const handleVideoUpload = async (e) => {
       formData.append("upload_preset", "courses_videos_preset");
       const contentRange = `bytes ${start}-${end - 1}/${file.size}`;
 
+      console.log("now first time of uploa to cloud")
+
       while (retries <= maxRetries) {
         const response = await uploadToCloud(
           formData,
