@@ -1,4 +1,4 @@
-importScripts("/src/utils/uploadToCloud.js");
+
 
 // Install service worker and activate immediately
 self.addEventListener("install", (event) => {
