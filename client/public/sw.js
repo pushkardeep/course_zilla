@@ -1,4 +1,4 @@
-import { uploadToCloud } from "../src/utils/uploadToCloud";
+importScripts("src/utils/uploadToCloud.js");
 
 // Install service worker and activate immediately
 self.addEventListener("install", (event) => {
@@ -47,7 +47,7 @@ const handleVideoUpload = async (e) => {
       const contentRange = `bytes ${start}-${end - 1}/${file.size}`;
 
       while (retries <= maxRetries) {
-        const response = await uploadToCloud(
+        const response = await self.uploadToCloud(
           formData,
           uniqueName,
           contentRange
@@ -106,7 +106,7 @@ const handleImageUpload = async (e) => {
     formData.append("upload_preset", "courses_cover_image_preset");
 
     while (retries <= maxRetries) {
-      const response = await uploadToCloud(formData, uniqueName);
+      const response = await self.uploadToCloud(formData, uniqueName);
       if (response.secure_url) {
         self.clients.matchAll().then((clients) => {
           clients.forEach((client) => {
