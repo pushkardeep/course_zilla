@@ -12,6 +12,7 @@ self.addEventListener("activate", (event) => {
 
 // Listen for messages from clients and handle uploads accordingly
 self.onmessage = async (e) => {
+  console.log("message");
   switch (e.data.type) {
     case "VIDEO_UPLOAD":
       await handleVideoUpload(e);
