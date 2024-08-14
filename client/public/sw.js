@@ -14,7 +14,7 @@ self.addEventListener('message', (event) => {
 });
 
 // Listen for messages from clients and handle uploads accordingly
-navigator.serviceWorker.onmessage = async (e) => {
+self.onmessage = async (e) => {
   console.log("sw main message aa gya hai video ka ")
   switch (e.data.type) {
     case "VIDEO_UPLOAD":
