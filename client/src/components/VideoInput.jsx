@@ -17,14 +17,24 @@ const VideoInput = forwardRef((prop, ref) => {
       return alert(validation.message);
     }
 
+    const isEnvSet = sendMessage(
+      {
+        video_preset: import.meta.env.VITE_VIDEO_PRESET,
+        cloudName: import.meta.env.VITE_CLOUD_NAME,
+      },
+      "SET_ENV"
+    );
+
+    if (!isEnvSet.success) {
+      return alert(isEnvSet.message);
+    }
+
     const isSend = sendMessage(file, "VIDEO_UPLOAD");
 
     if (!isSend.success) {
       ref.current.value = "";
       return alert(isSend.message);
     }
-
-    console.log("video send ho gyi hai")
 
     if (prop.type === "first") {
       prop.func();

@@ -12,24 +12,11 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-
     <title>Course Zilla</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .catch((error) => console.log(error));
-        });
-
-        navigator.serviceWorker.ready.then(() => {
-          console.log("sw is ready");
-        });
-      }
-    </script>
+    <script src="./public/static/scripts/index.js"></script>
   </body>
 </html>

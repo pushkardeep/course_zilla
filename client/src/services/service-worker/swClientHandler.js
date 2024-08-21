@@ -29,9 +29,6 @@ export const handleSWMessages = (dispatch, navigate, courseData) => {
         case "VIDEO_UPLOAD_ERROR":
           videoUploadErrorHandler(dispatch, payload.error);
           break;
-        case "CREATE_POST":
-          createPostHandler(payload, dispatch, navigate, courseData);
-          break;
         default:
           console.warn("Unhandled message type:", type);
           break;

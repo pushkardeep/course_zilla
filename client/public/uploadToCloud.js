@@ -12,10 +12,10 @@ const prepareHeaders = (uniqueName, contentRange) => {
 };
 
 // Handle the upload request to Cloudinary
-const handleUploadRequest = async (formData, headers) => {
+const handleUploadRequest = async (formData, headers, cloudName) => {
   try {
     const response = await fetch(
-      `https://api.cloudinary.com/v1_1/da2o22xsg/auto/upload`,
+      `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
       {
         method: "POST",
         body: formData,
@@ -41,13 +41,13 @@ const handleUploadRequest = async (formData, headers) => {
 
 // Upload to Cloudinary with appropriate headers and error handling
 const uploadToCloud = async (
+  cloudName,
   formData,
   uniqueName,
   contentRange = undefined
 ) => {
-  console.log("upload to cloud is run ");
   const headers = prepareHeaders(uniqueName, contentRange);
-  return await handleUploadRequest(formData, headers);
+  return await handleUploadRequest(formData, headers, cloudName);
 };
 
 self.uploadToCloud = uploadToCloud;

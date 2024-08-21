@@ -1,5 +1,9 @@
 importScripts("/uploadToCloud.js");
 
+let video_preset;
+let image_preset;
+let cloudName;
+
 // Install service worker and activate immediately
 self.addEventListener("install", (event) => {
   event.waitUntil(self.skipWaiting());
@@ -11,7 +15,6 @@ self.addEventListener("activate", (event) => {
 
 // Listen for messages from clients and handle uploads accordingly
 self.onmessage = async (e) => {
-  console.log("sw main message aa gya hai video ka ");
   switch (e.data.type) {
     case "VIDEO_UPLOAD":
       await handleVideoUpload(e);
@@ -22,9 +25,24 @@ self.onmessage = async (e) => {
     case "CREATE_POST":
       createPost(e);
       break;
+    case "SET_ENV":
+      setEnv(e);
+      break;
     default:
       console.log("Unknown error type");
       break;
+  }
+};
+
+const setEnv = (e) => {
+  if (e.data.payload.video_preset) {
+    cloudName = e.data.payload.cloudName;
+    video_preset = e.data.payload.video_preset;
+  }
+
+  if (e.data.payload.image_preset) {
+    cloudName = e.data.payload.cloudName;
+    image_preset = e.data.payload.image_preset;
   }
 };
 
@@ -43,11 +61,12 @@ const handleVideoUpload = async (e) => {
       const end = Math.min((i + 1) * chunkSize, file.size);
       const formData = new FormData();
       formData.append("file", file.slice(start, end));
-      formData.append("upload_preset", "courses_videos_preset");
+      formData.append("upload_preset", video_preset);
       const contentRange = `bytes ${start}-${end - 1}/${file.size}`;
 
       while (retries <= maxRetries) {
         const response = await self.uploadToCloud(
+          cloudName,
           formData,
           uniqueName,
           contentRange
@@ -89,68 +108,6 @@ const handleVideoUpload = async (e) => {
     sendErrorMessageToClients(
       "VIDEO_UPLOAD_ERROR",
       error.message || "Video Upload failed, Please try again."
-    );
-  }
-};
-
-// Handle image upload process
-const handleImageUpload = async (e) => {
-  try {
-    const file = e.data.payload;
-    const uniqueName = `uuid-${Date.now()}`;
-    const maxRetries = 1;
-    let retries = 0;
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "courses_cover_image_preset");
-
-    while (retries <= maxRetries) {
-      const response = await self.uploadToCloud(formData, uniqueName);
-      if (response.secure_url) {
-        self.clients.matchAll().then((clients) => {
-          clients.forEach((client) => {
-            client.postMessage({
-              type: "IMAGE_UPLOADED",
-              image_url: response.secure_url,
-            });
-          });
-        });
-        break;
-      }
-
-      if (response.success === false) {
-        retries += 1;
-        if (retries > maxRetries) {
-          sendErrorMessageToClients(
-            "IMAGE_UPLOAD_ERROR",
-            "Thumbnail Upload failed, Please try again."
-          );
-        }
-      }
-    }
-  } catch (error) {
-    sendErrorMessageToClients(
-      "IMAGE_UPLOAD_ERROR",
-      error.message || "Thumbnail Upload failed, Please try again."
-    );
-  }
-};
-
-const createPost = (e) => {
-  try {
-    self.clients.matchAll().then((clients) => {
-      clients.forEach((client) => {
-        client.postMessage({
-          type: "CREATE_POST",
-          textualData: e.data.payload,
-        });
-      });
-    });
-  } catch (error) {
-    sendErrorMessageToClients(
-      "course_creation_error",
-      "Something went wrong in creating 'Course', please try again."
     );
   }
 };

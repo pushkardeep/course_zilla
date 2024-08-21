@@ -1,13 +1,16 @@
 import React, { forwardRef } from "react";
 import { useDispatch } from "react-redux";
 import { imageValidation } from "../utils/fileValidation";
-import { sendMessage } from "../services/service-worker/swMessenger";
-import { isImageFileSelected, toggleThumbnailUploading } from "../Redux/slices/createCourseSlice";
+import {
+  isImageFileSelected,
+  toggleThumbnailUploading,
+} from "../Redux/slices/createCourseSlice";
+import { imageUpload } from "../services/uploads/image";
 
 const ImageInput = forwardRef(({ setIsImageLoaded }, ref) => {
   const dispatch = useDispatch();
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -17,18 +20,7 @@ const ImageInput = forwardRef(({ setIsImageLoaded }, ref) => {
       alert(validation.message);
       return;
     }
-
-    const isSend = sendMessage(file, "IMAGE_UPLOAD");
-    if (!isSend.success) {
-      ref.current.value = "";
-      alert(isSend.message);
-      return;
-    }
-
-    setIsImageLoaded(false);
-    dispatch(isImageFileSelected(true));
-    dispatch(toggleThumbnailUploading(true));
-    ref.current.value = "";
+    imageUpload(file, dispatch, setIsImageLoaded);
   };
 
   return (
